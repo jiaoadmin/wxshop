@@ -54,7 +54,7 @@
         <div class="forget">
             <a href="{{url('login/updpwd')}}">忘记密码？</a><!-- {{url('login/updpwd')}} -->
             <b></b>
-            <a href="javascript:;">新用户注册</a> <!-- {{url('login/register')}} -->
+            <a href="{{url('login/register')}}">新用户注册</a> <!-- {{url('login/register')}} -->
         </div>
     </div>
     <div class="oter_operation gray9" style="display: none;">
@@ -81,6 +81,11 @@
 $(function(){
     
     layui.use(['layer'],function(){
+
+        //点击验证码切换图片
+        $("#img").click(function(){
+            $(this).attr('src',"{{url('/verify/create')}}"+"?"+Math.random());
+        })
         //点击登录
         $('#btnLogin').click(function(){
             var name=$('#txtAccount').val();
@@ -103,10 +108,7 @@ $(function(){
             var verifycode=$('#verifycode').val();
             // console.log(verifycode);
             // return false;
-            //点击验证码切换图片
-            $("#img").click(function(){
-                $(this).attr('src',"{{url('/verify/create')}}"+"?"+Math.random());
-            })
+ 
 
             $.post(
                 'logindo',

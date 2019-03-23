@@ -61,26 +61,59 @@ class CartController extends Controller
     /**查询商品信息 */
     public function goodsInfo(){
         $user_id=session('user_id');
-        $data=Cart::join('goods','cart.goods_id','=','goods.goods_id')->where('user_id','=',$user_id)->get();
+        //两表联查
+        $data=Cart::join('goods','cart.goods_id','=','goods.goods_id')
+            ->where('user_id','=',$user_id)
+            ->where('is_show',1)
+            ->get();
         return $data;
 
     }
 
+    /**删除 */
+    public function del(Request $Request){
+        $goods_id = $Request->goods_id;
+        // var_dump($goods_id);
+        $user_id=session('user_id');
+        // var_dump($user_id);exit;
+        $data=[
+            'is_show'=>2,
+        ];
+        $where=[
+            'goods_id'=>$goods_id,
+            'user_id'=>$user_id
+        ];
+        // var_dump($where);exit;
+        $res=Cart::where($where)->update($data);
+        if($res){
+            echo 1;
+        }else{
+            echo 2;
+        }
+    }
 
-
+    /**购买数量 */
+    public function checknum(Request $Request){
+        $buy_number=$Request->post('buy_number');
+        $goods_id=$Request->post('goods_id');
+        $user_id=session('user_id');
+        
+        $where=[
+            'goods_id'=>$goods_id,
+            'user_id'=>$user_id
+        ];
+        $data=[
+            'buy_number'=>$buy_number
+        ];
+        $res=Cart::where($where)->update($data);
+        if($res){
+            echo 1;
+        }else{
+            echo 2;
+        }
+    }
 
 
 }
 
 
-
-/**
- * 商品加入购物车  要有跳到购物车的路由，购物车商品显示要按时间显示
- * 商品加入购物车
- *  跳转的路由
- *  商品显示有按时间展示
- * 
- *  加入时：有添加时间  要购买的数量 是否登录 那个用户加入那个商品
- * 
- * 点击加入购物车将商品id传给控制器
- **/
