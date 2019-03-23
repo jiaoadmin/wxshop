@@ -45,7 +45,6 @@ class IndexController extends Controller
         $cateInfo=Category::where(['pid'=>0])->get();
         $goods=Index::whereIn('cate_id',$c_id)->get();
         //var_dump($goods);exit;
-        //pluck  
         return view('allshop',['goods'=>$goods,'cateInfo'=>$cateInfo]);
     }
 

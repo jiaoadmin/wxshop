@@ -3,7 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>购物车</title>
-    <h1>1111111</h1>
     <meta content="app-id=518966501" name="apple-itunes-app" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no, maximum-scale=1.0" />
     <meta content="yes" name="apple-mobile-web-app-capable" />
@@ -314,9 +313,7 @@
                 var goods_num = $(this).parents('li').attr('goods_num');
                 console.log(goods_num);
                 if(buy_number>goods_num){
-                    layer.msg('库存紧张');
-                    $(this).prop('disabled',true);
-                    $(this).siblings('.car_btn_1').prop('disabled',false);
+                    $(this).prev().val(goods_num);
                 }
                 //向控制器传值
                 $.ajax({
@@ -354,7 +351,7 @@
                 $.ajax({
                     type:"post",
                     url:"{{url('catr/checknum')}}",
-                    data:{buy_number:buy_number,goods_id:goods_id,goods_num:goods_num,_token:'{{csrf_token()}}'},
+                    data:{buy_number:buy_number,goods_id:goods_id,_token:'{{csrf_token()}}'},
                     success:function(res){
                         console.log(res);
                     }
