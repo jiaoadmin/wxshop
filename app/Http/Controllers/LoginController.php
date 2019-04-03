@@ -17,7 +17,7 @@ class LoginController extends Controller
         $name=$Request->post('name');
         $pwd1=$Request->post('pwd');
         $pwd=md5($pwd1);
-        $verifycode=$Request->post('verifycode');
+        $verifycode=$Request->post('verifyc·ode');
         $session=session('verifycode');
         // var_dump($session);exit;
         if($verifycode!=$session){

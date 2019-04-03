@@ -31,7 +31,6 @@
         <div class="binSuccess5">
             <ul>
                 <li class="accAndPwd">
-                
                     <dl>
                         <div class="txtAccount">
                             <input id="txtAccount" type="text" placeholder="请输入您的手机号码"><i></i>
@@ -45,7 +44,6 @@
                         <input id="verifycode" type="text" placeholder="请输入验证码"  maxlength="4" /><b></b>
                         <img src="{{url('/verify/create')}}" alt="" id="img">
                     </dl>
-
                 </li>
             </ul>
             <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
@@ -108,8 +106,7 @@ $(function(){
             var verifycode=$('#verifycode').val();
             // console.log(verifycode);
             // return false;
- 
-
+            
             $.post(
                 'logindo',
                 {name:name,pwd:pwd,_token:_token,verifycode:verifycode},

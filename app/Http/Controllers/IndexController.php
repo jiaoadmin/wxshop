@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Model\Index;
 use App\Model\Category;
 use Illuminate\Http\Request;
+
 class IndexController extends Controller
 {
     /*

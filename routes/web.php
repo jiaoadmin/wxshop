@@ -33,7 +33,35 @@ Route::post('login/code','LoginController@code'); //注册验证码
 
 Route::post('cart/cart','CartController@cart'); //加入购物车
 Route::post('cart/del','CartController@del');  //删除
+Route::post('cart/dels','CartController@dels');  //删除
 Route::post('cart/checknum','CartController@checknum'); //购买数量
+Route::post('cart/payment','CartController@payment'); //支付方式
+Route::any('cart/paymentshow','CartController@paymentshow'); //支付方式
+
+Route::any('address/address','AddressController@address'); //收货地址
+Route::any('address/buyrecord','AddressController@buyrecord'); //潮购记录
+Route::post('address/del','AddressController@del'); //点击删除
+Route::get('address/edit/{id}','AddressController@edituser'); //点击编辑
+Route::any('address/default','AddressController@default'); //点击设置默认
+Route::any('address/useradd','AddressController@useradd'); //点击添加
+Route::any('address/mywallet','AddressController@mywallet'); //我的钱包
+
+Route::get('alipay/mobilpay','AliPayController@mobilpay'); //手机支付
+Route::any('alipay/return','AliPayController@re'); //同步回调
+Route::any('alipay/notify','AliPayController@notify'); //异步回调
+
+// Route::prefix('order')->group(function(){
+//     Route::post('order','OrderController@order'); //订单详情
+// });
+
+Route::post('order/order','OrderController@order'); //
+
+
+
+Route::get('wechar/wechar','weCharController@valid');
+Route::get('wechar/wechare','weCharController@checkSignature');
+
+
 
 
 

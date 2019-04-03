@@ -73,7 +73,7 @@ class CartController extends Controller
     /**删除 */
     public function del(Request $Request){
         $goods_id = $Request->goods_id;
-        // var_dump($goods_id);
+        // var_dump($goods_id);exit;
         $user_id=session('user_id');
         // var_dump($user_id);exit;
         $data=[
@@ -83,8 +83,29 @@ class CartController extends Controller
             'goods_id'=>$goods_id,
             'user_id'=>$user_id
         ];
+        // var_dump($data);exit;
         // var_dump($where);exit;
         $res=Cart::where($where)->update($data);
+        if($res){
+            echo 1;
+        }else{
+            echo 2;
+        }
+    }
+
+    /**批删 */
+    public function dels(Request $Request){
+        $goods_id=$Request->goods_id;
+        $goods_id=explode(',',$goods_id);
+        // var_dump($goods_id);exit;
+        $user_id=session('user_id');
+        // var_dump($user_id);exit;
+        $data=[
+            'is_show'=>2,
+        ];
+        $res=Cart::whereIn('goods_id',$goods_id)
+            ->where('user_id',$user_id)
+            ->update($data);
         if($res){
             echo 1;
         }else{
@@ -112,6 +133,43 @@ class CartController extends Controller
             echo 2;
         }
     }
+
+    /**支付 */
+    public function payment(Request $Request){
+        $goods_id=$Request->goods_id;
+        $price=$Request->price;
+        var_dump($price);
+        // var_dump($goods_id);
+        session(['goods_id'=>$goods_id]);
+        
+    }
+
+    /**支付展示页面 */
+    public function paymentshow(){
+        $goods_id = session('goods_id');
+        $goods_id=explode(',',$goods_id);
+        // var_dump($goods_id);exit;
+        $user_id = session('user_id');
+        // var_dump($user_id);exit;
+        $data=Index::join('cart','goods.goods_id','=','cart.goods_id')
+            ->whereIn('cart.goods_id',$goods_id)
+            ->where('cart.user_id',$user_id)
+            ->where(['is_show'=>1])
+            ->get();
+        $allprice=0;
+        foreach($data as $k=>$v){
+            $allprice+=$v['goods_price']*$v['buy_number'];
+        }
+        // dump($allprice);exit;
+        
+        return view('payment',['data'=>$data,'allprice'=>$allprice]);
+    }
+
+    /*支付方式 */
+    public function paytype(){
+
+    }
+
 
 
 }
